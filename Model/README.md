@@ -19,7 +19,7 @@ GOOGLE_API_KEY=your-google-api-key
 4. Run the server:
 
 ```bash
-uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+uvicorn LawSimplify:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ## Endpoints
