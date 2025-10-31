@@ -1,0 +1,67 @@
+services:
+  - type: web
+    name: lawmate-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: DOCUMENTQA_SERVICE_URL
+        sync: false
+      - key: CHATBOT_SERVICE_URL
+        sync: false
+      - key: LAWSIMPLIFY_SERVICE_URL
+        sync: false
+
+    # Optional persistent uploads (paid plans only)
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/backend/uploads
+      sizeGB: 1
+
+  - type: web
+    name: documentqa
+    env: python
+    rootDir: Model
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn DocumentQA:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8001
+
+  - type: web
+    name: chatbot
+    env: python
+    rootDir: Model
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn Chatbot:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8002
+
+  - type: web
+    name: lawsimplify
+    env: python
+    rootDir: Model
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn LawSimplify:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8003
+      # If your LawSimplify uses external LLMs, add keys here, e.g.:
+      # - key: GEMINI_API_KEY
+      #   sync: false
