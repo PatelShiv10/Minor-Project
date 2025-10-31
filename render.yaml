@@ -1,39 +1,11 @@
 services:
   - type: web
-    name: lawmate-backend
-    env: node
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: node server.js
-    plan: free
-    envVars:
-      - key: PORT
-        value: 5000
-      - key: MONGO_URI
-        sync: false
-      - key: JWT_SECRET
-        generateValue: true
-      - key: EMAIL_USER
-        sync: false
-      - key: EMAIL_PASS
-        sync: false
-      - key: DOCUMENTQA_SERVICE_URL
-        sync: false
-      - key: CHATBOT_SERVICE_URL
-        sync: false
-      - key: LAWSIMPLIFY_SERVICE_URL
-        sync: false
-
-  - type: web
     name: documentqa
     env: python
     rootDir: Model
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn DocumentQA:app --host 0.0.0.0 --port $PORT
     plan: free
-    envVars:
-      - key: PORT
-        value: 8001
 
   - type: web
     name: chatbot
@@ -42,9 +14,6 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn Chatbot:app --host 0.0.0.0 --port $PORT
     plan: free
-    envVars:
-      - key: PORT
-        value: 8002
 
   - type: web
     name: lawsimplify
@@ -54,5 +23,6 @@ services:
     startCommand: uvicorn LawSimplify:app --host 0.0.0.0 --port $PORT
     plan: free
     envVars:
-      - key: PORT
-        value: 8003
+      # Add only if your code needs external LLM keys
+      # - key: GEMINI_API_KEY
+      #   sync: false
