@@ -5,7 +5,11 @@ services:
     rootDir: Model
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn DocumentQA:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     plan: free
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
 
   - type: web
     name: chatbot
@@ -13,7 +17,12 @@ services:
     rootDir: Model
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn Chatbot:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     plan: free
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+
 
   - type: web
     name: lawsimplify
@@ -21,8 +30,8 @@ services:
     rootDir: Model
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn LawSimplify:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     plan: free
     envVars:
-      # Add only if your code needs external LLM keys
-      # - key: GEMINI_API_KEY
-      #   sync: false
+      - key: GEMINI_API_KEY
+        sync: false
