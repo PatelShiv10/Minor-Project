@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+requests
+beautifulsoup4
+googlesearch-python
+google-generativeai
+pytesseract
+PyPDF2
+python-docx
+langchain
+langchain-community
+sentence-transformers
+faiss-cpu
